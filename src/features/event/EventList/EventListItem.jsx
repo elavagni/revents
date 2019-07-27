@@ -23,7 +23,7 @@ class EventListItem extends Component {
           <span>
             <Icon name="clock" />
             {event.date} |
-            <Icon name="marker" /> {event.venue}
+            <Icon name="map marker alternate" /> {event.venue}
           </span>
         </Segment>
         <Segment secondary>
