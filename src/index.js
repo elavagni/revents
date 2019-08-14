@@ -8,7 +8,7 @@ import { BrowserRouter } from "react-router-dom";
 import { Provider } from "react-redux";
 import ReduxToastr from 'react-redux-toastr'
 import { configureStore } from "./app/store/configureStore";
-import ScrollToTop from './app/commons/util/ScrollToTop'
+import ScrollToTop from './app/common/util/ScrollToTop'
 
 const store = configureStore();
 

@@ -12,11 +12,11 @@ import {
 import { Segment, Form, Button, Grid, Header } from "semantic-ui-react";
 import { createEvent, updateEvent } from "../eventActions";
 import cuid from "cuid";
-import TextInput from "../../../app/commons/form/TextInput";
-import TextArea from "../../../app/commons/form/TextArea";
-import SelectInput from "../../../app/commons/form/SelectInput";
-import DateInput from "../../../app/commons/form/DateInput";
-import PlaceInput from "../../../app/commons/form/PlaceInput";
+import TextInput from "../../../app/common/form/TextInput";
+import TextArea from "../../../app/common/form/TextArea";
+import SelectInput from "../../../app/common/form/SelectInput";
+import DateInput from "../../../app/common/form/DateInput";
+import PlaceInput from "../../../app/common/form/PlaceInput";
 
 const mapState = (state, ownProps) => {
   const eventId = ownProps.match.params.id;

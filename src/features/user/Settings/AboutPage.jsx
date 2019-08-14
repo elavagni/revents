@@ -1,11 +1,11 @@
 import React from 'react';
 import { Button, Divider, Form, Header, Segment } from 'semantic-ui-react';
 import { Field, reduxForm } from 'redux-form';
-import RadioInput from '../../../app/commons/form/RadioInput';
-import TextInput from '../../../app/commons/form/TextInput';
-import TextArea from '../../../app/commons/form/TextArea';
-import PlaceInput from '../../../app/commons/form/PlaceInput';
-import SelectInput from '../../../app/commons/form/SelectInput';
+import RadioInput from '../../../app/common/form/RadioInput';
+import TextInput from '../../../app/common/form/TextInput';
+import TextArea from '../../../app/common/form/TextArea';
+import PlaceInput from '../../../app/common/form/PlaceInput';
+import SelectInput from '../../../app/common/form/SelectInput';
 
 const interests = [
   { key: 'drinks', text: 'Drinks', value: 'drinks' },
