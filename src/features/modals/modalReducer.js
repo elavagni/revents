@@ -1,4 +1,4 @@
-import { createReducer } from '../../app/commons/util/reducerUtils'
+import { createReducer } from '../../app/common/util/reducerUtils'
 import { MODAL_CLOSE, MODAL_OPEN } from './modalConstants';
 const initialState = null;
 

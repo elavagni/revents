@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
 import {Segment, Form, Header, Divider, Button} from 'semantic-ui-react';
 import {Field, reduxForm} from 'redux-form';
-import DateInput from "../../../app/commons/form/DateInput";
-import PlaceInput from "../../../app/commons/form/PlaceInput";
-import TextInput from "../../../app/commons/form/TextInput";
-import RadioInput from '../../../app/commons/form/RadioInput';
+import DateInput from "../../../app/common/form/DateInput";
+import PlaceInput from "../../../app/common/form/PlaceInput";
+import TextInput from "../../../app/common/form/TextInput";
+import RadioInput from '../../../app/common/form/RadioInput';
 import { addYears } from 'date-fns';
 
 class BasicPage extends Component {
