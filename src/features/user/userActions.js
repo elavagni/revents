@@ -148,7 +148,7 @@ async (dispatch, getState, {getFirestore, getFirebase}) => {
 }
 
 export const getUserEvents = (userUid, activeTab) => 
-    async (dispatch, getState) => {
+async (dispatch, getState) => {
         dispatch(asyncActionStart());
         const firestore = firebase.firestore();
         const today = new Date(Date.now());
@@ -194,4 +194,4 @@ export const getUserEvents = (userUid, activeTab) =>
             console.log(error);
             dispatch(asyncActionError());
         }
-    }
+}
