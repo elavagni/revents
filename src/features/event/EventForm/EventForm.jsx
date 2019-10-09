@@ -29,7 +29,8 @@ const mapState = (state, ownProps) => {
 
   return {
     initialValues: event,
-    event
+    event,
+    loading : state.async.loading
   };
 };
 
@@ -84,7 +85,7 @@ class EventForm extends Component {
         if(Object.keys(values.venueLatLng).length === 0) {
             values.venueLatLng = this.props.event.venueLatLng;
         }
-        this.props.updateEvent(values);
+        await this.props.updateEvent(values);
         this.props.history.push(`/events/${this.props.initialValues.id}`);
       } else {          
         let createdEvent = await this.props.createEvent(values);
@@ -123,7 +124,16 @@ class EventForm extends Component {
 
 
   render() {
-    const { history, initialValues, invalid, submitting, pristine, event, cancelToggle } = this.props;
+    const {
+      history,
+      initialValues,
+      invalid,
+      submitting,
+      pristine,
+      event,
+      cancelToggle,
+      loading
+    } = this.props;
     return (
       <Grid>
         <Grid.Column width={10}>
@@ -154,30 +164,35 @@ class EventForm extends Component {
               <Field
                 name="city"
                 component={PlaceInput}
-                options = {{types: ['(cities)']}}
-                onSelect = {this.handleCitySelect}
+                options={{ types: ["(cities)"] }}
+                onSelect={this.handleCitySelect}
                 placeholder="Event City"
               />
               <Field
                 name="venue"
                 component={PlaceInput}
-                options = {{
+                options={{
                   location: new google.maps.LatLng(this.state.cityLatLng),
                   radius: 1000,
-                  types: ['establishment']
+                  types: ["establishment"]
                 }}
-                onSelect = {this.handleVenueSelect}
+                onSelect={this.handleVenueSelect}
                 placeholder="Event Venue"
               />
               <Field
                 name="date"
                 component={DateInput}
-                dateFormat='dd LLL yyyy h:mm:a'
+                dateFormat="dd LLL yyyy h:mm:a"
                 showTimeSelect
-                  timeFormat="HH:mm"
+                timeFormat="HH:mm"
                 placeholder="Event Date"
               />
-              <Button disabled={invalid || submitting || pristine} positive type="submit">
+              <Button
+                disabled={invalid || submitting || pristine}
+                loading = {loading}
+                positive
+                type="submit"                
+              >
                 Submit
               </Button>
               <Button
@@ -187,15 +202,18 @@ class EventForm extends Component {
                     : () => history.push("/events")
                 }
                 type="button"
+                disabled = {loading}
               >
                 Cancel
               </Button>
               <Button
-                type='button'
-                color={event.cancelled ? 'green': 'red'}
-                floated='right'
-                content={event.cancelled ? 'Reactivate event' : 'Cancel event'}
-                onClick= {()=> cancelToggle(!event.cancelled, event.id)}
+                type="button"
+                color={event.cancelled ? "green" : "red"}
+                floated="right"
+                content={
+                  event.cancelled ? "Reactivate event" : "Cancel event"
+                }
+                onClick={() => cancelToggle(!event.cancelled, event.id)}
               />
             </Form>
           </Segment>
