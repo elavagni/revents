@@ -10,6 +10,7 @@ import { compose } from 'redux';
 import { addEventComment } from '../eventActions'
 import { objectToArray, createDataTree } from "../../../app/common/util/helpers";
 import { goingToEvent, cancelGoingToEvent } from  "../../user/userActions";
+import { openModal } from '../../modals/modalActions';
 
 const mapState = (state, ownProps) => {
   const eventId = ownProps.match.params.id;
@@ -33,7 +34,8 @@ const mapState = (state, ownProps) => {
 const actions = {
   goingToEvent,
   cancelGoingToEvent,
-  addEventComment
+  addEventComment,
+  openModal
 }
 
 
@@ -50,12 +52,23 @@ class EventDetailedPage extends Component {
   }
 
   render(){
-    const {loading, event, auth, goingToEvent, cancelGoingToEvent, addEventComment, eventChat} = this.props;
+    const {
+      openModal,
+      loading,
+      event,
+      auth,
+      goingToEvent,
+      cancelGoingToEvent,
+      addEventComment,
+      eventChat,
+    } = this.props;
     const attendees = event && event.attendees && objectToArray(event.attendees)
     const isHost = event.hostUid === auth.uid;
     const isGoing = attendees && attendees.some(a => a.id === auth.uid)
     const chatTree = !isEmpty(eventChat) && createDataTree(eventChat);
-    return (
+    const authenticated = auth.isloaded && !auth.isEmpty;
+    debugger;
+    return (      
       <Grid>
         <Grid.Column width={10}>
           <EventDetailedHeader
@@ -65,9 +78,13 @@ class EventDetailedPage extends Component {
             isHost={isHost}
             goingToEvent={goingToEvent}
             cancelGoingToEvent={cancelGoingToEvent}
+            authenticated={authenticated}
+            openModal={openModal}
           />
-          <EventDetailedInfo event={event} />
-          <EventDetailedChat addEventComment={addEventComment} eventId={event.id} eventChat={chatTree} />
+          <EventDetailedInfo event={event} />          
+          { authenticated && 
+            <EventDetailedChat addEventComment={addEventComment} eventId={event.id} eventChat={chatTree} />
+          }
         </Grid.Column>
         <Grid.Column width={6}>
           <EventDetailedSidebar attendees={attendees} />

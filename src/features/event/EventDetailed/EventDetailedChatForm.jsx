@@ -24,7 +24,7 @@ class EventDetailedChatForm extends Component {
                     rows={2}
                 />          
             <Button
-              content="Add Reply1"
+              content="Add Reply"
               labelPosition="left"
               icon="edit"
               primary
