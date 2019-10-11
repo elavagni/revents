@@ -9,16 +9,16 @@ import { firestoreConnect } from "react-redux-firebase";
 
 const query = [
   {
-    collection: 'activity',
+    collection: 'activity',    
     orderBy: ['timestamp', 'desc'],
     limit: 5
   }
 ]
 
-const mapState = state => ({
-  events: state.events,
+const mapState = state => ({ 
+  events: state.events.events,
   loading: state.async.loading,
-  activities: state.firestore.ordered.activity  
+  activities: state.firestore.ordered.activity
 });
 
 const actions = {
@@ -67,9 +67,9 @@ class EventDashboard extends Component {
     }             
   }
 
-  render() {
+  render() {    
     const { loading, activities } = this.props;
-    const {moreEvents, loadedEvents} = this.state;
+    const {moreEvents, loadedEvents} = this.state;    
     if (this.state.loadingInitial) return <LoadingComponent />;
     return (
       <Grid>

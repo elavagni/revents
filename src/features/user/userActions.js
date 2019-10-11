@@ -1,5 +1,5 @@
 import { toastr } from "react-redux-toastr";
-import { FETCH_EVENT } from '../event/eventConstants'
+import { FETCH_USER_EVENTS } from '../event/eventConstants'
 import { asyncActionFinish, asyncActionError, asyncActionStart } from "../async/asyncActions";
 import cuid from 'cuid';
 import firebase from '../../app/config/firebase'
@@ -99,11 +99,11 @@ export const setMainPhoto = photo => async (dispatch, getState) => {
             })
 
             let eventQuery = await eventAttendeeRef
-                .where('userUid', '==', user.uid)
-                .where('eventDate', '>=',  today)
+            .where('userUid', '==', user.uid)
+            .where('eventDate', '>=',  today)
 
             let eventQuerySnap = await eventQuery.get();
-
+                      
             for(let i=0; i<eventQuerySnap.docs.length; i++) {
                 let eventDocRef = await firestore
                                     .collection('events')
@@ -115,16 +115,15 @@ export const setMainPhoto = photo => async (dispatch, getState) => {
                     batch.update(eventDocRef, {
                         hostPhotoURL: photo.url,
                         [`attendees.${user.uid}.photoURL`]: photo.url
-                    })
+                    })  
                 } else {
-                  batch.update(eventDocRef, {
-                      [`attendees.${user.uid}.photoURL`]: photo.url
-                  })  
-                }                        
-         }               
-         console.log(batch);               
-        await batch.commit();
-        dispatch(asyncActionFinish())
+                    batch.update(eventDocRef, {
+                        [`attendees.${user.uid}.photoURL`]: photo.url
+                    })  
+                }                                        
+            }                                    
+            await batch.commit();
+            dispatch(asyncActionFinish())
         
         } catch (error) {
             console.log(error);
@@ -231,7 +230,8 @@ async (dispatch, getState) => {
                 events.push({...evt.data(), id: evt.id})
             }
 
-            dispatch({type: FETCH_EVENT, payload: {events}})
+            dispatch({type: FETCH_USER_EVENTS, payload: {events}})
+
             dispatch(asyncActionFinish());
 
         } catch (error) {

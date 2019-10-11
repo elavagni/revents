@@ -17,6 +17,7 @@ export const createEvent = event => {
     const newEvent = createNewEvent(user, photoURL, event);
 
     try {
+      dispatch(asyncActionStart);
       let createdEvent = await firestore.add("events", newEvent);
 
       await firestore.set(`event_attendee/${createdEvent.id}_${user.uid}`, {
@@ -26,10 +27,12 @@ export const createEvent = event => {
         host: true
       });
       toastr.success("Success!", "Event has been created");
+      dispatch(asyncActionFinish);
       return createdEvent;
     } catch (error) {
-      console.log(error);
+      console.log(error);      
       toastr.error("Oops!", "Something went wrong");
+      dispatch(asyncActionError);
     }
   };
 };
