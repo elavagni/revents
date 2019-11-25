@@ -21,7 +21,11 @@ const validate = combineValidators({
 const RegisterForm = ({handleSubmit, registerUser, error, invalid, submitting}) => {
   return (
     <div>
-      <Form size="large" autoComplete="off" onSubmit={handleSubmit(registerUser)}>
+      <Form
+        size="large"
+        autoComplete="off"
+        onSubmit={handleSubmit(registerUser)}
+      >
         <Segment>
           <Field
             name="displayName"
@@ -41,14 +45,22 @@ const RegisterForm = ({handleSubmit, registerUser, error, invalid, submitting}) 
             component={TextInput}
             placeholder="Password"
           />
-          {error && <Label basic color = "red">{error}</Label>}
-          <Button disabled={invalid || submitting} fluid size="large" color="teal">
+          {error && (
+            <Label basic color="red">
+              {error}
+            </Label>
+          )}
+          <Button
+            disabled={invalid || submitting}
+            loading={submitting}
+            fluid
+            size="large"
+            color="teal"
+          >
             Register
           </Button>
-          <Divider horizontal>
-          Or
-        </Divider>
-        <SocialLogin/>
+          <Divider horizontal>Or</Divider>
+          <SocialLogin />
         </Segment>
       </Form>
     </div>

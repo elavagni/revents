@@ -11,18 +11,22 @@ import { addEventComment } from '../eventActions'
 import { objectToArray, createDataTree } from "../../../app/common/util/helpers";
 import { goingToEvent, cancelGoingToEvent } from  "../../user/userActions";
 import { openModal } from '../../modals/modalActions';
+import LoadingComponent from "../../../app/layout/LoadingComponent";
+import NotFound from "../../../app/layout/NotFound";
 
 const mapState = (state, ownProps) => {
   const eventId = ownProps.match.params.id;
 
   let event = {};
 
-  if(state.firestore.ordered.events && state.firestore.ordered.events.length > 0) {
+  if(state.firestore.ordered.events && 
+     state.firestore.ordered.events.length > 0) {
     event = state.firestore.ordered.events.filter(event => event.id === eventId)[0] || {};
   }
 
   return {
     event,
+    requesting: state.firestore.status.requesting,
     auth: state.firebase.auth,
     loading: state.async.loading,
     eventChat:
@@ -51,7 +55,7 @@ class EventDetailedPage extends Component {
     await firestore.unsetListener(`events/${match.params.id}`);    
   }
 
-  render(){
+  render(){    
     const {
       openModal,
       loading,
@@ -61,13 +65,21 @@ class EventDetailedPage extends Component {
       cancelGoingToEvent,
       addEventComment,
       eventChat,
+      requesting,
+      match
     } = this.props;
-    const attendees = event && event.attendees && objectToArray(event.attendees)
+    const attendees = event && event.attendees && objectToArray(event.attendees).sort((a, b) => {
+      return a.joinDate.toDate() - b.joinDate.toDate()
+    })
     const isHost = event.hostUid === auth.uid;
     const isGoing = attendees && attendees.some(a => a.id === auth.uid)
     const chatTree = !isEmpty(eventChat) && createDataTree(eventChat);
-    const authenticated = auth.isloaded && !auth.isEmpty;
-    debugger;
+    const authenticated = auth.isLoaded && !auth.isEmpty;    
+    const loadingEvent = requesting[`events/${match.params.id}`];
+
+    if (loadingEvent) return <LoadingComponent/>
+    if (Object.keys(event).length === 0) return <NotFound />
+
     return (      
       <Grid>
         <Grid.Column width={10}>
