@@ -15,6 +15,15 @@ import NotFound from "./NotFound";
 
 class App extends Component {
   render() {
+ 
+    const disclaimerContainer = {
+      color: '#276f86',  
+      backgroundColor: '#f8ffff',
+      padding: '10px',
+      marginBottom: '10px',
+      marginTop: '10px'      
+    };   
+
     return (
       <Fragment>
         <ModalManager/>
@@ -28,7 +37,7 @@ class App extends Component {
                 <Switch key={this.props.location.key}>
                   <Route exact path="/events/" component={EventDashboard} />
                   {/*<Route path="/test/" component={TestComponent} />*/}
-                  <Route path="/events/:id" component={EventDetailedPage} />
+                  <Route path="/event/:id" component={EventDetailedPage} />
                   <Route path="/people/" component={UserIsAuthenticated(PeopleDashboard)} />
                   <Route path="/profile/:id" component={UserIsAuthenticated(UserDetailedPage)} />
                   <Route path="/settings/" component={UserIsAuthenticated(SettingsDashboard)} />
@@ -39,6 +48,12 @@ class App extends Component {
             </Fragment>
           )}
         />
+        <Container style={disclaimerContainer}>               
+          <div class="ui Tiny label" style={{color:"#276f86",  backgroundColor:"#f8ffff"}}>
+              Re-vents is a fictional website, created for the online course <span>Build an app with React, Redux and Firestore from scratch.</span> 
+              This website comes "as is" without warranty of any kind, and it should not be used as a real application.  Thanks to the original author Neil Cummings. Implemented by Eric Lavagni. 
+          </div>
+        </Container>
       </Fragment>
     );
   }

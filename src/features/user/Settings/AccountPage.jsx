@@ -56,19 +56,26 @@ const AccountPage = ({ error, invalid, submitting, handleSubmit, updatePassword,
       <div>
         <Header color="teal" sub content="Facebook Account" />
         <p>Please visit Facebook to update your account settings</p>
-        <Button type="button" color="facebook">
-          <Icon name="facebook" />
-          Go to Facebook
+        <Button as={'a'}
+          type="button" 
+          href="https://www.facebook.com"
+          target="_blank"
+            color="facebook">
+            <Icon name="facebook" />
+            Go to Facebook
         </Button>
       </div>}
 
-      { providerId && providerId === "google.com" &&
+      { providerId && providerId === "microsoft.com" &&
       <div>
-        <Header color="teal" sub content="Google Account" />
-        <p>Please visit Google to update your account settings</p>
-        <Button type="button" color="google plus">
-          <Icon name="google plus" />
-          Go to Google
+        <Header color="teal" sub content="Microsoft Account" />
+        <p>Please visit Microsoft to update your account settings</p>
+        <Button as={'a'}
+            href="https://login.live.com/"
+            target="_blank"
+            type="button" color="twitter">
+          <Icon name="windows" />
+          Go to Microsoft
         </Button>
       </div>}
     </Segment>
