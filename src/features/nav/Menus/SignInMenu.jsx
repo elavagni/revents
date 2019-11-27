@@ -1,6 +1,6 @@
 import React from "react";
 import { Dropdown, Image, Menu } from "semantic-ui-react";
-import { Link } from "react-router-dom";
+import { HashLink as Link } from 'react-router-hash-link';
 
 const SignInMenu = ({ signOut, profile, auth}) => {
   return (
@@ -8,9 +8,9 @@ const SignInMenu = ({ signOut, profile, auth}) => {
       <Image avatar spaced="right" src={profile.photoURL || "/assets/user.png"} />
       <Dropdown pointing="top left" text={profile.displayName}>
         <Dropdown.Menu>
-          <Dropdown.Item text="Create Event" icon="plus" />
-          <Dropdown.Item text="My Events" icon="calendar" />
-          <Dropdown.Item text="My Network" icon="users" />
+          <Dropdown.Item as={Link} to = {'/createEvent'} text="Create Event" icon="plus" />
+          <Dropdown.Item as={Link} to = {`/profile/${auth.uid}#user-events`} text="My Events" icon="calendar" />
+          <Dropdown.Item as={Link} to = {'/people'} text="My Network" icon="users" />
           <Dropdown.Item as={Link} to = {`/profile/${auth.uid}`} text="My Profile" icon="user" />
           <Dropdown.Item
             as={Link}
