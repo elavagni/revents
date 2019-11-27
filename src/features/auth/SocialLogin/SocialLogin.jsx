@@ -14,11 +14,18 @@ const SocialLogin = ({socialLogin}) => {
         <Icon name="facebook" /> Login with Facebook
       </Button>
 
-      <Button 
+      {/* <Button 
         onClick = {() => socialLogin('google')}
         type="button" fluid color="google plus">
         <Icon name="google plus" />
         Login with Google
+      </Button> */}
+      
+      <Button 
+        onClick = {() => socialLogin('microsoft.com')}
+        type="button" fluid color="twitter">
+        <Icon name="windows" />        
+        Login with Microsoft
       </Button>
     </div>
   );

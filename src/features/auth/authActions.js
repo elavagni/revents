@@ -43,28 +43,52 @@ export const registerUser = user =>
     }
   }
 
-  export const socialLogin = (selectedProvider) => 
-    async (dispatch, getState, {getFirebase, getFirestore}) =>{
-      const firebase = getFirebase();
-      const firestore = getFirestore();
-      try {
-        dispatch(closeModal());
-          let user =  await firebase.login({
-            provider: selectedProvider,
-            type: 'popup'
-        })
-        if (user.addiotinalUserInfo.isNewUser) {
-            await firestore.set(`users/${user.user.uid}`,{
-              displayName: user.profile.displayName,
-              photoURL: user.profile.avatarUrl,
-              createdAt: firestore.FieldValue.serverTimestamp
-            })
-        }
+  export const microsoftLogin = (firebase, firestore) => {  
+    let provider = new firebase.auth.OAuthProvider('microsoft.com');
+    firebase.auth().signInWithPopup(provider)
+            .then(async (result) => {
+                let userResult = result;                
+                if (!userResult.additionalUserInfo.isNewUser) {                                 
+                  await firestore.set(`users/${userResult.user.uid}`,{
+                      displayName: userResult.user.displayName,
+                      photoURL: userResult.user.photoURL,
+                      createdAt: firestore.FieldValue.serverTimestamp()
+                    })
+                }
+            })              
+            .catch(function(error) {
+              console.log(error);
+            });
+  }
+   
 
-      } catch(error) {
-        console.log(error);
+export const socialLogin = (selectedProvider) =>
+  async (dispatch, getState, {getFirebase, getFirestore}) => {
+  try {     
+    const firebase = getFirebase();
+    const firestore = getFirestore();
+    dispatch(closeModal());
+
+    //There isn't a react-redux-firebase auth provider for microsoft, use firebase api directly
+    if (selectedProvider === 'microsoft.com') {
+      microsoftLogin(firebase, firestore);  
+    } else {  
+      let user =  await firebase.login({
+        provider: selectedProvider,
+        type: 'popup'
+      })
+      if (user.additionalUserInfo.isNewUser) {
+        await firestore.set(`users/${user.user.uid}`,{
+          displayName: user.profile.displayName,
+          photoURL: user.profile.avatarUrl,
+          createdAt: firestore.FieldValue.serverTimestamp()
+          })
       }
     }
+  } catch(error) {
+    console.log(error);
+  }
+}
 
     export const updatePassword = (creds) => 
         async (dispatch, getState, {getFirebase}) => {
