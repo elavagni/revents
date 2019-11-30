@@ -14,7 +14,7 @@ const UserDetailedEvents = ({events, eventsLoading, changeTab}) => {
   return (
     <Grid.Column width={12}>
       <Segment attached loading={eventsLoading}>
-        <Header icon="calendar" content="Events" />
+        <Header id="user-events" icon="calendar" content="Events" />
         <Tab panes={panes} menu={{secondary: true, pointing: true}} onTabChange={(e, data) => changeTab(e, data) }/>
         <br/>
         <Card.Group itemsPerRow={5}>

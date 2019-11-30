@@ -11,6 +11,7 @@ import UserDetailedPhotos from './UserDetailedPhotos';
 import { userDetailedQuery } from '../userQueries'
 import LoadingComponent from '../../../app/layout/LoadingComponent';
 import { getUserEvents, followUser, unfollowUser } from '../userActions'
+import { toastr } from 'react-redux-toastr'
 
 
 const mapState = (state, ownProps) => {
@@ -43,11 +44,14 @@ const actions = {
 
 class UserDetailedPage extends Component {
 
-    /*async componentDidMount() {
-        //let events = await this.props.getUserEvents(this.props.userUid);        
+    async componentDidMount() {
+      let user = await this.props.firestore.get(`users/${this.props.match.params.id}`);
+      if (!user.exists) {
+        toastr.error('Not found', 'This is not the user you are looking for')
+        this.props.history.push('/error');
+      }
+      await this.props.getUserEvents(this.props.userUid);
     }
-    */
-
     changeTab = (e, data) => {
         this.props.getUserEvents(this.props.userUid, data.activeIndex);
     }

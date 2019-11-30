@@ -49,7 +49,7 @@ class App extends Component {
           )}
         />
         <Container style={disclaimerContainer}>               
-          <div class="ui Tiny label" style={{color:"#276f86",  backgroundColor:"#f8ffff"}}>
+          <div className="ui Tiny label" style={{color:"#276f86",  backgroundColor:"#f8ffff"}}>
               Re-vents is a fictional website, created for the online course <span>Build an app with React, Redux and Firestore from scratch.</span> 
               This website comes "as is" without warranty of any kind, and it should not be used as a real application.  Thanks to the original author Neil Cummings. Implemented by Eric Lavagni. 
           </div>
